@@ -1,5 +1,5 @@
 import CyberneticGridShader from "@/components/ui/cybernetic-grid-shader";
-import { motion, useScroll, useSpring, useMotionValue } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 
 export default function App() {
@@ -8,39 +8,17 @@ export default function App() {
     container: containerRef
   });
 
-  const distortionValue = useMotionValue(0);
-  const smoothDistortion = useSpring(distortionValue, {
-    stiffness: 100,
-    damping: 30
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 40,
+    damping: 20
   });
 
   const [distortion, setDistortion] = useState(0);
 
-  // Sync state to smooth spring
+  // Directly map progress to distortion (which is now our scroll offset)
   useEffect(() => {
-    return smoothDistortion.on("change", (v) => setDistortion(v));
-  }, [smoothDistortion]);
-
-  // Transition trigger: 
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-
-    const unsubscribe = scrollYProgress.on("change", () => {
-      // Trigger the spring
-      distortionValue.set(1.0);
-
-      // Decay back to 0 when stillness is detected
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        distortionValue.set(0);
-      }, 100);
-    });
-
-    return () => {
-      unsubscribe();
-      clearTimeout(timeout);
-    };
-  }, [scrollYProgress, distortionValue]);
+    return smoothProgress.on("change", (v) => setDistortion(v));
+  }, [smoothProgress]);
 
   return (
     <div
@@ -52,8 +30,8 @@ export default function App() {
       {/* Hero Section */}
       <section className="relative z-10 h-screen flex flex-col items-center justify-center snap-start pointer-events-none">
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center justify-center space-y-6"
         >
@@ -80,7 +58,7 @@ export default function App() {
       {/* About Section 1 */}
       <section className="relative z-10 h-screen flex flex-col items-center justify-center snap-start px-8">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-4xl text-center"
@@ -98,7 +76,7 @@ export default function App() {
       {/* About Section 2 */}
       <section className="relative z-10 h-screen flex flex-col items-center justify-center snap-start px-8">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           className="max-w-4xl text-center"

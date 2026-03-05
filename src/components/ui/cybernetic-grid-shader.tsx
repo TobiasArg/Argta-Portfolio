@@ -56,22 +56,24 @@ const CyberneticGridShader = ({ distortion = 0 }: CyberneticGridShaderProps) => 
         float t         = iTime * 0.2;
         float mouseDist = length(uv - mouse);
 
-        // warp effect around mouse
-        float warp = sin(mouseDist * 20.0 - t * 4.0) * 0.1;
-        // reduce 0.4 to 0.15 to make the distortion radius smaller
-        warp *= smoothstep(0.15, 0.0, mouseDist);
-        uv += warp;
+        // BASE MATRIX FORM (Permanent Amplitude/Curvature)
+        float d = length(uv);
+        // This gives it a 'sphere' or 'curved' technical form (Amplitude)
+        uv *= 1.3 - d * 0.4; 
 
-        // GLOBAL SCROLL WARP (Identical to cursor logic but global)
-        if (uDistortion > 0.01) {
-            // Global wave based on UV position, mimicking the mouse sin ripple
-            float scrollWavy = sin(uv.y * 20.0 - iTime * 10.0) * 0.025 * uDistortion;
-            uv += scrollWavy; 
-        }
+        // NAVIGATION (Move between different sectors)
+        vec2 navOffset = vec2(0.0, uDistortion * 2.0); 
+        vec2 scrolledUv = uv + navOffset;
 
-        // ZOOM control: higher values = more squares (feels farther away)
-        float zoom = 3.0;
-        vec2 zoomedUv = uv * zoom;
+        // CURSOR DISTORTION (Warp)
+        float currentMouseDist = length(scrolledUv - (mouse + navOffset));
+        float warp = sin(currentMouseDist * 20.0 - t * 4.0) * 0.1;
+        warp *= smoothstep(0.15, 0.0, currentMouseDist);
+        scrolledUv += warp;
+
+        // ZOOM control
+        float zoom = 4.0;
+        vec2 zoomedUv = scrolledUv * zoom;
 
         // grid lines
         vec2 gridUv = abs(fract(zoomedUv * 10.0) - 0.5);
