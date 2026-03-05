@@ -59,12 +59,18 @@ export default {
           "from": { width: "0" },
           "to": { width: "100%" }
         },
+        typingSub: {
+          "0%": { width: "0" },
+          "50%": { width: "0" },
+          "100%": { width: "100%" }
+        },
         blink: {
           "50%": { borderColor: "transparent" }
         }
       },
       animation: {
-        typing: "typing 3.5s steps(20, end), blink .75s step-end infinite"
+        typing: "typing 1.5s steps(10, end), blink .75s step-end infinite",
+        "typing-delayed": "typingSub 4s steps(30, end), blink .75s step-end infinite"
       }
     }
   },
