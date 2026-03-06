@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import * as THREE from 'three';
+import { useScroll, useSpring } from 'framer-motion';
 
 interface CyberneticGridShaderProps {
-    distortion?: number;
+    scrollRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-const CyberneticGridShader = ({ distortion = 0 }: CyberneticGridShaderProps) => {
+const CyberneticGridShader = memo(({ scrollRef }: CyberneticGridShaderProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const uniformsRef = useRef<{
         iTime: { value: number };
@@ -13,6 +14,16 @@ const CyberneticGridShader = ({ distortion = 0 }: CyberneticGridShaderProps) => 
         iMouse: { value: THREE.Vector2 };
         uDistortion: { value: number };
     } | null>(null);
+
+    // Track scroll distortion internally using Framer Motion
+    const { scrollYProgress } = useScroll({
+        container: scrollRef as React.RefObject<HTMLElement>
+    });
+
+    const smoothProgress = useSpring(scrollYProgress, {
+        stiffness: 40,
+        damping: 20
+    });
 
     useEffect(() => {
         const container = containerRef.current;
@@ -106,7 +117,7 @@ const CyberneticGridShader = ({ distortion = 0 }: CyberneticGridShaderProps) => 
         const uniforms = {
             iTime: { value: 0 },
             iResolution: { value: new THREE.Vector2() },
-            uDistortion: { value: distortion },
+            uDistortion: { value: smoothProgress.get() },
             iMouse: {
                 value: new THREE.Vector2(
                     (window.innerWidth / 2) * window.devicePixelRatio,
@@ -172,12 +183,14 @@ const CyberneticGridShader = ({ distortion = 0 }: CyberneticGridShaderProps) => 
         };
     }, []);
 
-    // Update uDistortion uniform when prop changes
+    // Update uDistortion uniform when smoothProgress changes
     useEffect(() => {
-        if (uniformsRef.current) {
-            uniformsRef.current.uDistortion.value = distortion;
-        }
-    }, [distortion]);
+        return smoothProgress.on("change", (v) => {
+            if (uniformsRef.current) {
+                uniformsRef.current.uDistortion.value = v;
+            }
+        });
+    }, [smoothProgress]);
 
     return (
         <div
@@ -195,6 +208,6 @@ const CyberneticGridShader = ({ distortion = 0 }: CyberneticGridShaderProps) => 
             aria-label="Cybernetic Grid animated background"
         />
     );
-};
+});
 
 export default CyberneticGridShader;
