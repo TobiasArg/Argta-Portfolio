@@ -10,15 +10,15 @@ import {
 } from "lucide-react";
 
 const ConstructedText = memo(({ text, className, delayOffset = 0 }: { text: string; className?: string; delayOffset?: number }) => {
-  const letters = text.split("");
+  const words = text.split(" ");
 
   const container = {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
       opacity: 1,
       transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.05 * i + delayOffset
+        staggerChildren: 0.03,
+        delayChildren: delayOffset
       },
     }),
   };
@@ -43,21 +43,26 @@ const ConstructedText = memo(({ text, className, delayOffset = 0 }: { text: stri
 
   return (
     <motion.div
-      style={{ display: "flex", overflow: "hidden", flexWrap: "wrap", justifyContent: "center" }}
+      style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       variants={container}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
       className={className}
     >
-      {letters.map((letter, index) => (
-        <motion.span
-          variants={child}
-          key={index}
-          style={{ display: "inline-block", whiteSpace: "pre" }}
-        >
-          {letter}
-        </motion.span>
+      {words.map((word, wordIndex) => (
+        <span key={wordIndex} style={{ whiteSpace: "nowrap", display: "inline-flex" }}>
+          {word.split("").map((letter, letterIndex) => (
+            <motion.span
+              variants={child}
+              key={letterIndex}
+              style={{ display: "inline-block" }}
+            >
+              {letter}
+            </motion.span>
+          ))}
+          {wordIndex !== words.length - 1 && <span style={{ width: "0.3em" }}>&nbsp;</span>}
+        </span>
       ))}
     </motion.div>
   );
@@ -437,25 +442,86 @@ export default function App() {
         </div>
       </section>
 
-      <section className="relative z-10 h-screen flex flex-col items-center justify-center snap-start px-8">
-        <div className="max-w-5xl text-center space-y-12">
-          <div className="space-y-4">
+      <section className="relative z-10 py-32 px-8 flex flex-col items-center">
+        <div className="max-w-6xl w-full space-y-20">
+          <div className="text-center space-y-4">
             <span className="text-orange-500 text-[10px] tracking-[1em] uppercase animate-pulse">Sector 04 // Architecture</span>
             <ConstructedText
               text="VISION & MISSION"
               className="text-4xl md:text-6xl font-light tracking-[0.2em] uppercase text-white"
             />
           </div>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-lg md:text-xl font-extralight leading-relaxed text-white/50 max-w-2xl mx-auto"
+
+          <motion.div
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid grid-cols-1 md:grid-cols-6 gap-8"
           >
-            Engineering scalable <span className="text-orange-500">digital ecosystems</span> that merge high-fidelity graphics
-            with robust computational backbones. Defining the intersection of art and logic.
-          </motion.p>
+            {[
+              {
+                label: "MODULE::FRONTEND",
+                title: "Core Frontend",
+                desc: "Crafting sophisticated reactive interfaces with React and TypeScript. Specializing in high-fidelity UX, complex state management, and pixel-perfect implementation of technical designs. Expertise in performance optimization, accessible UI components, and seamless integration with real-time data streams.",
+                tag: "INTERFACE_LOGIC"
+              },
+              {
+                label: "MODULE::BACKEND",
+                title: "Core Backend",
+                desc: "Building robust server-side backbones with Node.js and TypeScript. Specialized in clean REST API architecture, database optimization (PostgreSQL), and secure data orchestration. Focused on scalable microservices, middleware logic, and high-security authentication protocols.",
+                tag: "SERVER_BACKBONE"
+              },
+              {
+                label: "MODULE::CLOUD_INFRA",
+                title: "Infra & Deployment",
+                desc: "Scaling production environments via Vercel and Neon. Implementing automated CI/CD pipelines and serverless practices for maximum reliability.",
+                tag: "HIGH_AVAILABILITY"
+              },
+              {
+                label: "MODULE::NEURAL_OPS",
+                title: "LLMs and Agents",
+                desc: "Advanced integration of Large Language Models and MCPs. Specializing in autonomous agent environments and efficiency automation.",
+                tag: "NEURAL_SYNC"
+              },
+              {
+                label: "MODULE::SYSTEMS_ENGINE",
+                title: "Low-level systems",
+                desc: "Systems orchestration using C/C++. Technical understanding of concurrency and high-performance process execution at the machine level.",
+                tag: "NATIVE_LOGIC"
+              }
+            ].map((module, i) => (
+              <motion.div
+                key={i}
+                variants={cardVariants}
+                className={`relative p-8 bg-white/[0.02] border border-white/10 backdrop-blur-md rounded-sm hover:border-orange-500/40 transition-all duration-500 group overflow-hidden ${i < 2 ? 'md:col-span-3' : 'md:col-span-2'}`}
+              >
+                {/* Horizontal Scanline Effect */}
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500/30 to-transparent group-hover:via-orange-500/60 transition-all" />
+
+                <div className="space-y-6">
+                  <div className="flex justify-between items-start">
+                    <span className="text-orange-500 font-mono text-[9px] tracking-[0.3em] uppercase">{module.label}</span>
+                    <span className="text-white/20 font-mono text-[8px] tracking-widest uppercase">{module.tag}</span>
+                  </div>
+
+                  <h4 className="text-white text-xl font-light tracking-widest uppercase group-hover:text-orange-400 transition-colors">{module.title}</h4>
+
+                  <p className="text-white/40 text-[11px] leading-relaxed tracking-widest font-extralight border-l border-white/10 pl-4 group-hover:border-orange-500/30 transition-colors">
+                    {module.desc}
+                  </p>
+
+                  <div className="pt-4 flex items-center space-x-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-orange-500/40 group-hover:animate-pulse" />
+                    <span className="text-[7px] font-mono text-white/20 uppercase tracking-[0.4em]">Protocol // Verified</span>
+                  </div>
+                </div>
+
+                {/* Corner Accent */}
+                <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-white/5 group-hover:border-orange-500/40 transition-colors" />
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -467,7 +533,7 @@ export default function App() {
 
           <div className="text-center space-y-4 mb-20">
             <span className="text-orange-500 text-[10px] tracking-[1em] uppercase">Sector 05 // Professional Log</span>
-            <ConstructedText text="NEURAL CHRONOLOGY" className="text-4xl md:text-6xl font-light tracking-[0.2em] uppercase text-white" />
+            <ConstructedText text="PROFESSIONAL CHRONOLOGY" className="text-4xl md:text-6xl font-light tracking-[0.2em] uppercase text-white" />
           </div>
 
           <motion.div
