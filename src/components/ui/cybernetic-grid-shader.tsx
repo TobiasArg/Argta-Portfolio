@@ -31,7 +31,7 @@ const CyberneticGridShader = memo(({ scrollRef }: CyberneticGridShaderProps) => 
 
         // 1) Renderer, Scene, Camera, Clock
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2.0));
         container.appendChild(renderer.domElement);
 
         const scene = new THREE.Scene();
