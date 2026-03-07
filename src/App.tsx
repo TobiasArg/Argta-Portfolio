@@ -6,7 +6,7 @@ import Lenis from "lenis";
 import { GitHubCalendar } from 'react-github-calendar';
 import {
   Code2, Layers, Cpu, Database, Cloud, Zap, Brain, Terminal, Box,
-  Server, ShieldCheck, Globe, Monitor, Atom, Network, Mail, Github, Linkedin, ExternalLink, FileDown
+  Server, ShieldCheck, Monitor, Atom, Mail, Github, Linkedin, ExternalLink, FileDown
 } from "lucide-react";
 
 const ConstructedText = memo(({ text, className, delayOffset = 0 }: { text: string; className?: string; delayOffset?: number }) => {
@@ -372,11 +372,11 @@ export default function App() {
             </div>
 
             <div className="space-y-16">
-              {/* Group 1: Frontend Ecosystem */}
+              {/* Group 1: Frontend */}
               <div className="space-y-6">
                 <div className="flex items-center space-x-4 opacity-40">
                   <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-white/20" />
-                  <span className="text-[10px] tracking-[0.3em] uppercase font-mono">Frontend Ecosystem</span>
+                  <span className="text-[10px] tracking-[0.3em] uppercase font-mono">Frontend</span>
                   <div className="h-[1px] w-12 bg-white/20" />
                 </div>
                 <motion.div
@@ -394,11 +394,11 @@ export default function App() {
                 </motion.div>
               </div>
 
-              {/* Group 2: Backend & Systems */}
+              {/* Group 2: Backend & Languages */}
               <div className="space-y-6">
                 <div className="flex items-center space-x-4 opacity-40">
                   <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-white/20" />
-                  <span className="text-[10px] tracking-[0.3em] uppercase font-mono">Backend & Systems</span>
+                  <span className="text-[10px] tracking-[0.3em] uppercase font-mono">Backend & Languages</span>
                   <div className="h-[1px] w-12 bg-white/20" />
                 </div>
                 <motion.div
@@ -406,21 +406,19 @@ export default function App() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.2 }}
-                  className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
+                  className="grid grid-cols-2 md:grid-cols-3 gap-4"
                 >
                   <TechCard label="Node.js" level={94} icon={Server} delay={0.1} />
                   <TechCard label="C" level={85} icon={Cpu} delay={0.2} />
                   <TechCard label="C++" level={88} icon={Cpu} delay={0.3} />
-                  <TechCard label="Docker" level={84} icon={Box} delay={0.4} />
-                  <TechCard label="Linux" level={89} icon={Terminal} delay={0.5} />
                 </motion.div>
               </div>
 
-              {/* Group 3: Data Intelligence */}
+              {/* Group 3: Databases */}
               <div className="space-y-6">
                 <div className="flex items-center space-x-4 opacity-40">
                   <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-white/20" />
-                  <span className="text-[10px] tracking-[0.3em] uppercase font-mono">Data Intelligence</span>
+                  <span className="text-[10px] tracking-[0.3em] uppercase font-mono">Databases</span>
                   <div className="h-[1px] w-12 bg-white/20" />
                 </div>
                 <motion.div
@@ -437,11 +435,11 @@ export default function App() {
                 </motion.div>
               </div>
 
-              {/* Group 4: Neural & Infrastructure */}
+              {/* Group 4: Infrastructure & DevOps */}
               <div className="space-y-6">
                 <div className="flex items-center space-x-4 opacity-40">
                   <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-white/20" />
-                  <span className="text-[10px] tracking-[0.3em] uppercase font-mono">Neural & Infrastructure</span>
+                  <span className="text-[10px] tracking-[0.3em] uppercase font-mono">Infrastructure & DevOps</span>
                   <div className="h-[1px] w-12 bg-white/20" />
                 </div>
                 <motion.div
@@ -449,13 +447,33 @@ export default function App() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.2 }}
-                  className="grid grid-cols-2 lg:grid-cols-5 gap-4"
+                  className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
                 >
-                  <TechCard label="LLMs" level={95} icon={Brain} delay={0.1} />
-                  <TechCard label="MCPs / Neural" level={97} icon={Network} delay={0.2} />
-                  <TechCard label="Architecture" level={87} icon={Cloud} delay={0.3} />
-                  <TechCard label="Vercel" level={96} icon={Globe} delay={0.4} />
-                  <TechCard label="Postman" level={92} icon={ShieldCheck} delay={0.5} />
+                  <TechCard label="Docker" level={84} icon={Box} delay={0.1} />
+                  <TechCard label="Linux" level={89} icon={Terminal} delay={0.2} />
+                  <TechCard label="Cloud" level={86} icon={Cloud} delay={0.3} />
+                  <TechCard label="Serverless" level={88} icon={Zap} delay={0.4} />
+                  <TechCard label="VMs" level={80} icon={Monitor} delay={0.5} />
+                </motion.div>
+              </div>
+
+              {/* Group 5: AI & Tooling */}
+              <div className="space-y-6">
+                <div className="flex items-center space-x-4 opacity-40">
+                  <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-white/20" />
+                  <span className="text-[10px] tracking-[0.3em] uppercase font-mono">AI & Tooling</span>
+                  <div className="h-[1px] w-12 bg-white/20" />
+                </div>
+                <motion.div
+                  variants={sectionVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="grid grid-cols-2 md:grid-cols-3 gap-4"
+                >
+                  <TechCard label="LLMs / Agents" level={95} icon={Brain} delay={0.1} />
+                  <TechCard label="CLI" level={91} icon={Terminal} delay={0.2} />
+                  <TechCard label="Postman" level={92} icon={ShieldCheck} delay={0.3} />
                 </motion.div>
               </div>
             </div>
