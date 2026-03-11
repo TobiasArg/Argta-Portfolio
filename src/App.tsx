@@ -280,9 +280,15 @@ export default function App() {
 
         {/* 01 // HERO */}
         <section className="relative z-10 h-screen flex flex-col items-center justify-center snap-start pointer-events-none">
-          <div className="flex flex-col items-center justify-center space-y-0 w-full max-w-5xl">
-            <PathAnimation text="ARGTA" fontSize={120} duration="6s" className="w-full" />
-            <PathAnimation text="FULLSTACK DEVELOPER" fontSize={32} duration="8s" className="w-full -mt-16" />
+          <div className="flex flex-col items-center justify-center space-y-0 w-full max-w-8xl px-4 md:px-8">
+            <div className="hidden md:block w-full">
+              <PathAnimation text="TOBIAS ARANGIO" fontSize={48} duration="10s" className="w-full" />
+            </div>
+            <div className="md:hidden w-full flex flex-col">
+              <PathAnimation text="TOBIAS" fontSize={48} duration="6s" className="w-full" />
+              <PathAnimation text="ARANGIO" fontSize={48} duration="6s" className="w-full -mt-8" />
+            </div>
+            <PathAnimation text="FULLSTACK DEVELOPER" fontSize={20} duration="14s" className="w-full -mt-10 md:-mt-16" />
             <h1 className="sr-only">Tobias Arangio - Fullstack Developer Portfolio</h1>
           </div>
           <motion.div
@@ -790,8 +796,8 @@ export default function App() {
               className="relative p-12 bg-white/[0.02] border border-white/10 backdrop-blur-xl rounded-sm group overflow-hidden"
             >
               {/* Background Accent Glow */}
-              <div className="absolute -top-24 -right-24 w-64 h-64 bg-orange-500/5 blur-[100px] rounded-full group-hover:bg-orange-500/10 transition-colors duration-700" />
-              <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-orange-500/5 blur-[100px] rounded-full group-hover:bg-orange-500/10 transition-colors duration-700" />
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-orange-500/5 blur-[100px] rounded-full group-hover:bg-orange-500/10 transition-colors duration-700" />
+              <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-orange-500/5 blur-[100px] rounded-full group-hover:bg-orange-500/10 transition-colors duration-700" />
 
               <div className="relative z-10 space-y-10">
                 <div className="space-y-4">

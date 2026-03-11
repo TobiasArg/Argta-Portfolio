@@ -13,9 +13,24 @@ const PathAnimation = ({
     className = "",
     duration = "4s"
 }: PathAnimationProps) => {
+    const letterSpacingEm = 0.2;
+    const estimatedGlyphWidth = 0.62;
+    const textLength = Math.max(text.length, 1);
+    const estimatedTextWidth =
+        fontSize *
+        (textLength * estimatedGlyphWidth + Math.max(0, textLength - 1) * letterSpacingEm);
+    const horizontalPadding = fontSize * 1.2;
+    const viewBoxWidth = Math.max(800, Math.ceil(estimatedTextWidth + horizontalPadding * 2));
+    const viewBoxHeight = Math.max(160, Math.ceil(fontSize * 2));
+
     return (
         <div className={`flex justify-center items-center ${className}`}>
-            <svg width="100%" height="auto" viewBox="0 0 800 160" className="max-w-full">
+            <svg
+                width="100%"
+                height="auto"
+                viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+                className="max-w-full overflow-visible"
+            >
                 <defs>
                     <linearGradient id="cyberGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stopColor="#f97316" /> {/* orange-500 */}
@@ -33,7 +48,7 @@ const PathAnimation = ({
                     strokeWidth="1.5"
                     fontSize={fontSize}
                     fontWeight="200"
-                    letterSpacing="0.2em"
+                    letterSpacing={`${letterSpacingEm}em`}
                     fontFamily="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
                     style={{
                         strokeDasharray: '1000',
