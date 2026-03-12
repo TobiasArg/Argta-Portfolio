@@ -774,15 +774,8 @@ export default function App() {
               <div className="absolute -top-24 -right-24 w-48 h-48 bg-orange-500/5 blur-[100px] rounded-full group-hover:bg-orange-500/10 transition-colors duration-700" />
               <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-orange-500/5 blur-[100px] rounded-full group-hover:bg-orange-500/10 transition-colors duration-700" />
 
-              <div className="relative z-10 space-y-10">
-                <div className="space-y-4">
-                  <p className="text-white/40 text-[12px] sm:text-[13px] tracking-[0.14em] sm:tracking-[0.3em] leading-relaxed sm:leading-loose max-w-xl mx-auto uppercase font-extralight">
-                    System status: <span className="text-orange-500/60">Ready for transmission</span>. <br />
-                    Select preferred encryption protocol to establish connection.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+              <div className="relative z-10 space-y-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-7">
                   {[
                     { label: "Mail", icon: Mail, href: "mailto:your-email@example.com", subtext: "direct_uplink" },
                     { label: "GitHub", icon: Github, href: "https://github.com/TobiasArg", subtext: "core_repository" },
@@ -796,18 +789,18 @@ export default function App() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Connect via ${item.label}`}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 0.99 }}
                       whileTap={{ scale: 0.98 }}
-                      className="group/btn relative p-5 sm:p-8 border border-white/5 bg-white/[0.01] hover:border-orange-500/40 hover:bg-orange-500/[0.03] transition-all duration-500 flex flex-col items-center justify-center space-y-3 sm:space-y-4"
+                      className="group/btn relative min-h-[176px] sm:min-h-[216px] p-6 sm:p-10 border border-orange-500/30 bg-orange-500/[0.08] shadow-[0_0_26px_rgba(249,115,22,0.18),inset_0_0_26px_rgba(249,115,22,0.06)] hover:border-white/15 hover:bg-black/35 hover:shadow-[0_0_0_rgba(0,0,0,0)] transition-all duration-500 flex flex-col items-center justify-center space-y-4 sm:space-y-5"
                     >
-                      <div className="p-3 sm:p-4 bg-white/5 border border-white/5 rounded-none group-hover/btn:border-orange-500/20 group-hover/btn:bg-orange-500/10 transition-all duration-500">
-                        <item.icon className="w-6 h-6 text-white/40 group-hover/btn:text-orange-500 transition-colors" />
+                      <div className="p-3 sm:p-4 bg-orange-500/20 border border-orange-500/35 rounded-none group-hover/btn:border-white/10 group-hover/btn:bg-white/5 transition-all duration-500">
+                        <item.icon className="w-6 h-6 sm:w-7 sm:h-7 text-orange-300 group-hover/btn:text-white/40 transition-colors" />
                       </div>
                       <div className="text-center space-y-1">
-                        <span className="block text-white text-[11px] sm:text-[12px] tracking-[0.2em] sm:tracking-[0.4em] uppercase font-light">{item.label}</span>
-                        <span className="block text-orange-500/30 text-[8px] font-mono uppercase tracking-widest">{item.subtext}</span>
+                        <span className="block text-white text-[12px] sm:text-[13px] tracking-[0.2em] sm:tracking-[0.4em] uppercase font-light group-hover/btn:text-white/70 transition-colors">{item.label}</span>
+                        <span className="block text-orange-300/70 text-[8px] font-mono uppercase tracking-widest group-hover/btn:text-white/25 transition-colors">{item.subtext}</span>
                       </div>
-                      <ExternalLink className="absolute top-4 right-4 w-3 h-3 text-white/10 group-hover/btn:text-orange-500/40 transition-colors" />
+                      <ExternalLink className="absolute top-4 right-4 w-3 h-3 text-orange-400/50 group-hover/btn:text-white/20 transition-colors" />
                     </motion.a>
                   ))}
                 </div>
